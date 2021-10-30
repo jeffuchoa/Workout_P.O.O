@@ -8,59 +8,95 @@ class Pessoa{
         this.idade = idade;
     }
     toString():string {
-      return 'Pessoa ${this.nome} ${this.idade}';
+      return '${this.nome} tem ${this.idade} anos';
     }
 }
 
 let aqui:boolean = false;
 class moto{
-    pessoa:Pessoa;
+    pessoa:Pessoa | null
     pot:number; //buzina
     tempo:number; //tempo gastado
-    compra:number; //tempo comprado
+    compra:number=0 //tempo comprado
 
-    constructor(pessoa:Pessoa,pot:number,tempo:number,compra:number){
-        this.pessoa = pessoa;
+    constructor(pot:number){
+        this.pessoa = null;
         this.pot = pot;
-        this.tempo = tempo;
-        this.compra = compra;
+        this.tempo=0;
+        
 
     }
-    bibi(){
-        let pe:string=" ";
-        for(var i = 0; i<this.pot;i++){
+    toString():string {
+        
+        let nome:string="Não tem criança :(";
+        if (this.pessoa != null){
+            nome=this.pessoa.nome;
+        }
+        return '[${nome}]';
+
+      }
+    bibi(pot:number) {
+        let pe:string="";
+        for(var i = 0; i<pot;i++){
             pe +="e";
         }
-        return this.pot;
-        console.log(this.pot);
+        
+        console.log ("P"+pe+"m");
         
     }
-    In(){
-        if (aqui==false){
-            let crianca=new Pessoa("lala",1)
-            aqui = true;
-        }
-        else{
-            console.log("Já tem criança meu anjo, espere sua vez");
-        }
-        
+
+    buy(valo:number):void{
+        this.tempo+=valo
     }
-    out(){
-        if (aqui==false){
-            console.log( "Não tem criança pra expulsar da motoca");
+
+    dirigi(quero:number):boolean{
+        if(this.tempo<quero){
+            console.log("tempo insuficiente");
+            return false;
         }
-        else{
-            aqui = false;
-        }
+        this.tempo-=quero;
+        return true
 
     }
-    show(){
+    In(pessoa:Pessoa):any{
+
+        if(pessoa.idade>13){
+            console.log (pessoa.nome+" Ta vei, pode entrar não");
+
+        }
+        else if (this.pessoa==null){
+            this.pessoa =pessoa;
+            return true;
+        }
+        
+        else {
+            console.log("Já tem criança meu anjo, espere sua vez");
+            return false;
+        }
+        
+    }
+    out():any{
+        if (this.pessoa==null){
+            console.log( "Não tem criança pra expulsar da motoca");
+            return false;
+        }
+        else{
+            console.log(this.pessoa.nome+" foi chutada(o) para fora da motoca :)");
+            this.pessoa==null;
+        }
 
     }
 }
 
 let crianca=new Pessoa("aninha",1);
-let anda= new moto(crianca,2,2,3);
+let crianca2=new Pessoa("Claudinho",100);
+let anda= new  moto(5);
 
-console.log(anda.bibi);
-console.log("socorro");
+anda.out();
+anda.In(crianca);
+anda.In(crianca);
+anda.out();
+anda.In(crianca2);
+anda.bibi(anda.pot);
+anda.buy(20);
+anda.dirigi(30);
