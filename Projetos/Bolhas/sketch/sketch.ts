@@ -8,7 +8,7 @@ let hit:number=0;
 let fase:string[]=["bolha","abelha","paralelepipedo","amidalou"];
 let x_fase:number=0;
 let x_letra:number=0;
-let times:number[]=[3000,4000,4200];
+let times:number[]=[3800,4000,4200];
 let cor:string="";
 
 let alinha:number[]=[225,250,570]
@@ -120,7 +120,7 @@ class Board{
     addBubble():void{
         let x=random(0,width-2*Bubble.radius);
         let y=-2*Bubble.radius;
-        let letter=["bolha?wmisbolhazj","abelha?!qwertabelhakjhgf","paralelepipedozxparalelepipedosa"];
+        let letter=["bolha?wmisbolhazj","abelha?!qwertabelhakjhgf","paralelepipedozxparalelepipedorrroaskok"];
         let velo=random(1,3);
         let bubble=new Bubble(x,y,letter[x_fase][int(random(letter[x_fase].length))],velo,bubble_img);
         this.bubbles.push(bubble);
@@ -148,7 +148,7 @@ class Board{
         fill(225,225,225);
         textSize(40);
         textFont(font);
-        text('Tempo  '+int((this.time()/30)),(windowWidth/2)-150,windowHeight-(windowHeight-50));
+        text('Tempo  '+int((times[x_fase]/30)),(windowWidth/2)-150,windowHeight-(windowHeight-50));
         fill(128,128,128);
         textSize(100);
         text (fase[x_fase],(windowWidth/2)-alinha[cont],windowHeight);
@@ -182,38 +182,48 @@ class Game{
         this.board.draw
     }
 
-    winer(){
-        frameRate(6)
-        background(int(random(0,255)),int(random(0,255)),int(random(0,255)));
-        fill(int(random(0,255)),int(random(0,255)),int(random(0,255)));
-        textSize(300);
-        textFont(font);
-        text("Parabéns!",windowWidth/2-650,windowHeight/2);
-        fill(int(random(0,255)),int(random(0,255)),int(random(0,255)));
-        text(":)",windowWidth/2-100,windowHeight/2+300);
-    }
 
     gamePlay(){
         this.board.update();
         background(back);
         this.board.draw();
 
-        if (times[x_fase]==0){
+        if (times[x_fase]<=0){
             this.activeFunction=this.gameOver;
-            times=[3800,4000,4200];
-            x_fase=0;
-            x_letra=0;
         }
 
         else if  (x_fase==3){
             this.activeFunction=this.winer;
+            x_fase=0;
         }
         
 
     }
 
-    restart(code:number):void{
+    restart():void{
+        times=[3800,4000,4200];
+        x_letra=0;
+        x_fase=0;
+        cor="";
+        hit=0;
+        cont=0
 
+    }
+    winer():void{
+        
+        fill(int(random(0,255)),int(random(0,255)),int(random(0,255)));
+        textSize(150);
+        textFont(font);
+        text("Parabéns!",windowWidth/2-590,windowHeight/2);
+        fill(int(random(0,255)),int(random(0,255)),int(random(0,255)));
+        text(":)",windowWidth/2-100,windowHeight/2+300);
+        textSize(28);
+        text("Aperte a barra de espaço para reiniciar o jogo,campeão",windowWidth/2-590,(windowHeight/2)+400);
+        
+        if(keyCode==32){
+            this.activeFunction=this.gamePlay;
+            this.restart();
+        }
     }
     
 
@@ -232,12 +242,7 @@ class Game{
 
         if(keyCode==32){
             this.activeFunction=this.gamePlay;
-            times=[3800,4000,4200];
-            x_letra=0;
-            x_fase=0;
-            cor="";
-            hit=0;
-            cont=0
+            this.restart();
         }
 
     }
@@ -256,7 +261,6 @@ function setup(){
 }
 function keyPressed(){
     game.board.removeHit(keyCode);
-    game.restart(keyCode)
 }
 function draw(){
     background(color(0,0,0));
