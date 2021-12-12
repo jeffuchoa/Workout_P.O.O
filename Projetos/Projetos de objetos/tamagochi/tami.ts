@@ -2,31 +2,36 @@ const readline = require('readline-sync');
 let input = (): string => readline.question();
 let write = (x : any) => process.stdout.write("" + x);
 
+
 class Pet {
-	private nome: string = "";
+	private nome: string ;
 	private energy:number;
     private saciedade:number;
     private limpeza:number;
-    private idade:number=0;
-    private diamante:number=0;
-    private isAlive: boolean = true;
-    private max:Pet;
+    private idade:number;
+    private diamante:number;
+    private isAlive: boolean;
+    private max:Array<number>;
 
 	constructor(nome: string, energy:number,saciedade:number,limpeza:number){
-		this.setNome(nome);
+		this.nome=nome
 		this.energy=energy;
         this.saciedade=saciedade;
         this.limpeza=limpeza;
+        this.idade=0;
         this.diamante=0;
+        this.isAlive=true;
+        this.max=[this.energy,this.saciedade,this.limpeza];
 
-		this.max=new Pet(this.getNome(),this.energy,this.saciedade,this.limpeza)
 	}
 
-    public setNome(nome: string) {
+
+
+    public setNome(nome: string):string {
         if (nome.length == 0) {
-            this.nome = "bichinho";
+            return "bichinho";
         } else {
-            this.nome = nome;
+            return nome;
         }
     }
 
@@ -39,69 +44,101 @@ class Pet {
     }
 
     public setSaciedade(saciedade: number) {
-        if (saciedade == 0) {
+        if (saciedade<0){
+        if (this.saciedade-saciedade <= 0) {
             this.saciedade = 0;
             this.isAlive = false;
             write(this.getNome()+" Teve uma overdose de ar ---MORREU---\n");
-        } else if (saciedade > this.max.saciedade) {
-            this.saciedade = this.max.saciedade;
-            write(this.getNome()+" Está saciado!\n");
-        } else {
-            this.saciedade = saciedade;
         }
+    
+        else if(saciedade<0){
+            this.saciedade+=saciedade
+        }
+    }
+         else if (saciedade >0) {
+            if(saciedade+this.saciedade > this.max[1] ){
+            this.saciedade = this.max[1];
+            write(this.getNome()+" Está saciado!\n");
+            }
+            else if(saciedade >0){
+                write("Comeu um pão com mortandela totozo\n")
+                this.saciedade+=saciedade
+            }
+    }
+        
     }
 
     public setEnergy(energy: number) {
-        if(energy==0){
+        if(energy<0){
+        if(this.energy-energy==0){
             this.energy = 0;
             this.isAlive=false;
             write(this.getNome()+" Ficou com tanto sono que caiu no sono eterno ---MORREU--- \n");
         }
-        else if(energy>0){
-            this.energy=this.max.energy
-            write(this.getNome()+" Dormiu que nem um bebê");
+        else if(energy<0){
+            this.energy+=energy
+        }
+    }
+        else if(energy>0 && energy<this.max[0]-5){
+            this.energy=this.max[0]
+            write(this.getNome()+" Dormiu que nem um bebê\n");
+            
+        }
+        else{
+            console.log("Fail: Pet está com muita energia para dormir :o\n");
             
         }
         
     }
 
     public setClean(clean: number) {
-        if(clean==0){
+        if(clean<0){
+        if(this.limpeza-clean<=0){
             this.limpeza = 0;
             this.isAlive=false;
-            write(this.getNome()+"Sentiu seu cheiro e morreu de desgosto ---MORREU--- \n");
+            write(this.getNome()+" Sentiu seu cheiro e morreu de desgosto ---MORREU--- \n");
         }
-        else if(clean>0){
-            if (this.limpeza <this.max.limpeza-5){
-            this.limpeza=this.max.limpeza;
-            write(this.getNome()+"Ficou limpinho e cheiroso")
-            }
-            if(this.limpeza>=this.max.limpeza-5){
-                write("Fail: Pet está muito energético para dormir")
-            }
-            
+        else if(clean<0){
+            this.limpeza+=clean;
+        }
+    }
+        else if(clean==0){
+            this.limpeza=this.max[2];
+            write(this.getNome()+" Ficou limpinho e cheiroso\n")
         }
 
     }    
-    public clean(): void {
+
+    public sleep():void{
+
         if(!this.isAlive) {
-            write("Pet morreu por conta do seu própio cheiro \n");
+            write("Pet Já esta no sono eterno ");
             return;
         }
-        this.setClean(this.limpeza)
-        this.setSaciedade(this.saciedade - 1);
-        this.setEnergy(this.energy - 3);
+        this.setEnergy(this.energy);
+        this.idade+=1
+    }
+
+    public clean(): void {
+        if(!this.isAlive) {
+            write("Pet Morto não toma banho ");
+            return;
+        }
+        this.setClean(0);
+        this.setSaciedade(-1);
+        this.setEnergy(-3);
         this.idade=this.idade+2;
     }
 
     public brincar(): void {
         if(!this.isAlive) {
-            write("Pet morto não brinca\n");
+            write("Pet morto não brinca");
             return;
         }
-        this.setSaciedade(this.saciedade - 1);
-        this.setEnergy(this.energy - 2);
-        this.setClean(this.limpeza-3);
+        console.log (this.nome+" Se divertiu muito!")
+        this.setSaciedade(-1);
+        this.setEnergy(-2);
+        this.setClean(-3);
         this.diamante=this.diamante+1;
         this.idade+=1;
     }
@@ -111,15 +148,15 @@ class Pet {
             write("Pet morto não come\n");
             return;
         }
-        this.setSaciedade(this.saciedade + 4);
-        this.setEnergy(this.energy-1);
-        this.setClean(this.limpeza-2);
+        this.setSaciedade(+4);
+        this.setEnergy(-1);
+        this.setClean(-2);
         this.idade+=1;
     }
 
 	public toString() {
 		if (this.isAlive)
-            return this.getNome() + ": " +"Energia |"  + this.energy + "/" + this.max.energy+"|  Saciedade |"+this.saciedade+"/"+this.max.saciedade+"|  Limpeza |"+this.limpeza+"/"+this.max.limpeza+"|  Idade |"+this.idade+"/"+this.idade+"|  Diamantes|"+this.diamante+"/"+this.max.diamante+"|";
+            return this.getNome() + ": " +"Energia |"  + this.energy + "/" + this.max[0]+"|  Saciedade |"+this.saciedade+"/"+this.max[1]+"|  Limpeza |"+this.limpeza+"/"+this.max[2]+"|  Idade | "+this.idade+" |  Diamantes| "+this.diamante+" |"
         return "RIP";
 	}
 }
@@ -134,11 +171,13 @@ class IO {
 
     mostrar_help() {
         write("Comandos:\n");
-        write("  new (crie e dê um novo nome para seu Pet");
-        write("  show: mostra o pet\n");
-        write("  play: faz o pet brincar\n");
-        write("  eat: faz o pet comer\n");
-        write("  end: sai do programa\n");
+        write("  new : Crie e dê um novo nome para seu Pet\n");
+        write("  show: Mostra o pet\n");
+        write("  play: Faz o pet brincar\n");
+        write("  eat : Faz o pet comer\n");
+        write("  bath: Faz o pet comer\n");
+        write("  bed : Faz pet dormir\n");
+        write("  end : sai do programa\n");
     }
 
     shell() {
@@ -158,9 +197,14 @@ class IO {
                 pet.comer();
             } else if (words[0] == "play") {
                 pet.brincar();
+            } else if (words[0] == "bath") {
+                pet.clean();
+            } else if (words[0] == "bed") {
+                pet.sleep();
             } else if (words[0] == "new") {
                 let nome = words[1];
                 pet = new Pet(nome,20,20,20);
+                console.log(pet.getNome()+" Nasceu !!");
             } else {
                 console.log("Comando inválido");
             }
