@@ -30,13 +30,13 @@ class PulaPula{
         this.fila.shift();
     }
 
-    sair(){
+    sairPulapula(){
         console.log(this.dentroPulapula[0].nome+" Pulou tão alto que saiu do Pula-Pula :o")
         this.fila.push(this.dentroPulapula[0]);
         this.dentroPulapula.shift()
     }
 
-    remover(crianca:string){
+    removerPlayground(crianca:string){
 
         for(let i=0;i<this.dentroPulapula.length;i++){
             if (this.dentroPulapula[i].nome==crianca){
@@ -65,14 +65,14 @@ pulapul.entrarFila(new Criança("Kikito",40));
 pulapul.entrarPulapula(); //entrou no pula pula
 pulapul.entrarPulapula(); 
 
-pulapul.sair(); // Retirar do pula pula
-pulapul.sair(); 
+pulapul.sairPulapula(); // Retirar do pula pula
+pulapul.sairPulapula(); 
 
 pulapul.entrarPulapula();
-pulapul.sair();
+pulapul.sairPulapula();
 pulapul.entrarPulapula();
-pulapul.sair();
+pulapul.sairPulapula();
 pulapul.entrarPulapula(); //aninha pulou pela segunda vez
-pulapul.sair();
+pulapul.sairPulapula();
 
-pulapul.remover("aninha");
+pulapul.removerPlayground("aninha");
