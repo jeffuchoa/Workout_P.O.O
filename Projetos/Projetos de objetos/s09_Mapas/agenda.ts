@@ -113,7 +113,7 @@ class Agenda{
             if (cont == indice){
                 this.contatos.get(nome)!.getFone().delete(numero[0]);
             }
-            cont+=1;
+            cont += 1;
         }
     }
 
@@ -127,8 +127,8 @@ class Agenda{
             for(let contato of this.contatos.get(i)!.toString()){
                 str += contato;
             }
-            str +="\n";
-            str +="\n";
+            str += "\n";
+            str += "\n";
         }
         return str;
     }   
