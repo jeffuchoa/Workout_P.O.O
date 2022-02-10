@@ -5,8 +5,8 @@ let input = (): any => readline.question();
 let write = (x : any) => process.stdout.write("" + x);
 
 class Fone {
-    number:string
-    label:string
+    private number:string
+    private label:string
     constructor(label:string,telefone:string) { 
         this.number=telefone;
         this.label=label;
@@ -69,7 +69,7 @@ class Contato {
 
     addFone(fone: Fone):void {
         if (fone.validate()==true){
-            this.fones.set(fone.number,fone);
+            this.fones.set(fone.getfo(),fone);
         }
         else{
             console.log(fone)
