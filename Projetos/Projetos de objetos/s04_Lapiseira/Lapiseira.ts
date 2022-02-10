@@ -31,7 +31,7 @@ class Lapiseira {
     calibre: number;
     private grafite: Grafite | null;
 
-    constructor(calibre: number) { //é a lapiseira que cria o grafite?
+    constructor(calibre: number) { 
         this.calibre = calibre;
         this.grafite = null;
     }
@@ -60,7 +60,6 @@ class Lapiseira {
     }
 
     escrever(folhas: number): boolean {
-        //verificar se existe grafite
         if (this.grafite == null) {
             console.log("A lapiseira não possui um grafite");
             return false;
