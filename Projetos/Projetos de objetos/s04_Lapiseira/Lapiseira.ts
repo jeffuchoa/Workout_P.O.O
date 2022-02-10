@@ -21,12 +21,10 @@ class Grafite {
     }
 
     toString(): string {
-        //return "Grafite: " + this.calibre + ":" + this.dureza + ":" + this.tamanho;
         return `Grafite ${this.calibre}:${this.dureza}:${this.tamanho}`;
     }
 }
 
-//agregação
 class Lapiseira {
     calibre: number;
     private grafite: Grafite | null;
@@ -79,8 +77,8 @@ class Lapiseira {
     }
 }
 
-let pentel = new Lapiseira(0.5);
-pentel.setGrafite(new Grafite(0.5, "HB", 40));
-pentel.escrever(10);
-pentel.escrever(40);
-console.log(pentel);
+let grafite = new Lapiseira(0.7);
+grafite.setGrafite(new Grafite(0.7, "4B", 40));
+grafite.escrever(10);
+grafite.escrever(40);
+console.log(grafite);
