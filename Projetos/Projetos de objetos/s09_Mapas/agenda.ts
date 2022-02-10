@@ -85,7 +85,6 @@ class Agenda{
             if (contato[0].indexOf(palavra) != -1) {
                 str += this.contatos.get(contato[0]) + "\n";
             }
-
             for (let numeros of this.contatos.get(contato[0])!.getFone()) {
                 if (numeros[0].indexOf(palavra) != -1) {
                     str += this.contatos.get(contato[0]) + "\n";
@@ -95,13 +94,11 @@ class Agenda{
         console.log(str);
     }
     
-
     adicionar(contato: Contato, telefone: Fone) {
         
         if (! this.contatos.has(contato.getName())) {
             this.contatos.set(contato.getName(), contato);
             this.contatos.get(contato.getName())!.addFone(telefone);
-
         } else {
             this.contatos.get(contato.getName())!.addFone(telefone);
         }
