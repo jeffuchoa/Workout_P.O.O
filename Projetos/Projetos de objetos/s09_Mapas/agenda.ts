@@ -189,9 +189,6 @@ class IO {
 
 }
 
-
-
-
 let a:Agenda = new Agenda();
 let io = new IO(a);
 io.shell();
