@@ -107,19 +107,18 @@ class Agenda{
         }
     }
 
-    removerFone(x: string, y: number) {
+    removerFone(nome: string, indice: number) {
         let cont: number = 0;
-        for (let j of this.contatos.get(x)!.getFone()) {
-            if (cont == y){
-                this.contatos.get(x)!.getFone().delete(j[0]);
-                console.log(j[0] + "aninha");
+        for (let numero of this.contatos.get(nome)!.getFone()) {
+            if (cont == indice){
+                this.contatos.get(nome)!.getFone().delete(numero[0]);
             }
             cont+=1;
         }
     }
 
-    removerAgenda(x: string) {
-        this.contatos.delete(x);
+    removerAgenda(contato: string) {
+        this.contatos.delete(contato);
     }
 
     public toString(): any {
@@ -132,9 +131,7 @@ class Agenda{
             str +="\n";
         }
         return str;
-
     }   
-
 }
 class IO {
     Agenda: Agenda;
