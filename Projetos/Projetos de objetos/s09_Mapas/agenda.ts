@@ -23,10 +23,10 @@ class Fone {
     }
     
 
-    getla(){
+    getLabel(){
         return this.label
     }
-    getfo(){
+    getFone(){
         return this.number
     }
 
@@ -44,15 +44,11 @@ class Contato {
         this.fones = new Map<string,Fone>();
     }
 
-    getna(){
+    getName(){
         return this.nome;
     }
 
-    getfone(){
-        return this.fones
-
-    }
-    getfon(){
+    getFone(){
         return this.fones
 
     }
@@ -69,7 +65,7 @@ class Contato {
 
     addFone(fone: Fone):void {
         if (fone.validate()==true){
-            this.fones.set(fone.getfo(),fone);
+            this.fones.set(fone.getFone(),fone);
         }
         else{
             console.log(fone)
@@ -79,7 +75,7 @@ class Contato {
 
 }
 
-class agen{
+class Agenda{
     private contatos:Map<string,Contato>
     constructor(){
         this.contatos =new Map<string,Contato>();
@@ -92,7 +88,7 @@ class agen{
             if(contato[0].indexOf(x)!=-1){
             str+=this.contatos.get(contato[0])+"\n"
             }
-            for(let numeros of this.contatos.get(contato[0])!.getfon()){
+            for(let numeros of this.contatos.get(contato[0])!.getFone()){
                 if(numeros[0].indexOf(x)!=-1){
                     str+=this.contatos.get(contato[0])+"\n"
                 }
@@ -103,34 +99,34 @@ class agen{
     }
     
 
-    add(x:Contato,y:Fone){
+    adicionar(x:Contato,y:Fone){
         
-        if (!this.contatos.has(x.getna())){
-            this.contatos.set(x.getna(),x)
-            this.contatos.get(x.getna())!.addFone(y)
+        if (!this.contatos.has(x.getName())){
+            this.contatos.set(x.getName(),x)
+            this.contatos.get(x.getName())!.addFone(y)
         }
         
         else{
-            this.contatos.get(x.getna())!.addFone(y)
+            this.contatos.get(x.getName())!.addFone(y)
         }
             
         
     }
 
-    remofo(x:string,y:number){
+    removerFone(x:string,y:number){
         let cont:number=0
 
-        for(let j of this.contatos.get(x)!.getfon()){
+        for(let j of this.contatos.get(x)!.getFone()){
 
             if (cont==y){
-            this.contatos.get(x)!.getfon().delete(j[0])
+            this.contatos.get(x)!.getFone().delete(j[0])
             console.log(j[0]+"aninha")
             }
             cont+=1   
         }
     }
 
-    remo(x:string){
+    removerAgenda(x:string){
         this.contatos.delete(x)
     }
 
@@ -150,18 +146,18 @@ class agen{
 
 }
 class IO {
-    agen:agen;
+    Agenda:Agenda;
 
-    constructor(agen:agen) {
-        this.agen=agen;
+    constructor(Agenda:Agenda) {
+        this.Agenda=Agenda;
     }
     mostrar_help() {
         write("Comandos:\n");
-        write("  add  : Adicionar nova pessoa ou numero a agenda \n");
+        write("  add  : Adicionar nova pessoa ou numero a Agendada \n");
         write("  remf : Remover telefone do contato \n");
-        write("  remc : Remover contato da agenda \n");
+        write("  remc : Remover contato da Agendada \n");
         write("  busc : Buscar contato \n");
-        write("  show : Mostrar a agenda \n");
+        write("  show : Mostrar a Agendada \n");
     }
 
     shell() {
@@ -175,16 +171,16 @@ class IO {
             } else if (words[0] == "help") { 
                 this.mostrar_help();
             } else if (words[0] == "show") { 
-                write("" + this.agen + "\n");
+                write("" + this.Agenda + "\n");
             } else if (words[0] == "add") { 
                 let w:Array<string>=words[2].split(":")
-                this.agen.add(new Contato(words[1]),(new Fone(w[0],w[1])))
+                this.Agenda.adicionar(new Contato(words[1]),(new Fone(w[0],w[1])))
             } else if (words[0] == "remf") {
-                this.agen.remofo(words[1],words[2])      
+                this.Agenda.removerFone(words[1],words[2])      
             } else if (words[0] == "remc") { 
-                this.agen.remo(words[1])
+                this.Agenda.removerAgenda(words[1])
             } else if (words[0] == "busc") { 
-                this.agen.busca(words[1])
+                this.Agenda.busca(words[1])
             } else {
                 console.log("Comando inválido");
             }
@@ -196,6 +192,6 @@ class IO {
 
 
 
-let a:agen = new agen();
+let a:Agenda = new Agenda();
 let io = new IO(a);
 io.shell();
