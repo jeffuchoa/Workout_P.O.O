@@ -11,6 +11,7 @@ class Fone {
         this.number = telefone;
         this.label = label;
     }
+
     public  validate(): boolean {
         let valid = "0123456789()-.";
         for (let i = 0; i < this.number.length; i++) {
@@ -24,6 +25,7 @@ class Fone {
     getLabel() {
         return this.label;
     }
+
     getFone() {
         return this.number;
     }
@@ -34,7 +36,6 @@ class Fone {
 }
 
 class Contato {
-
     private nome: string;
     private fones: Map<string, Fone>;
     constructor(nome: string) {
@@ -54,8 +55,8 @@ class Contato {
         let str: string = "";
         let cont = 0;
         for(let i of this.fones) {
-        str += "[" + cont + ":" + i[1] + "] ";
-        cont += 1;
+            str += "[" + cont + ":" + i[1] + "] ";
+            cont += 1;
         }
         return "-" + this.nome + ": " + str;
     }
@@ -109,10 +110,9 @@ class Agenda{
     removerFone(x: string, y: number) {
         let cont: number = 0;
         for (let j of this.contatos.get(x)!.getFone()) {
-
             if (cont == y){
-            this.contatos.get(x)!.getFone().delete(j[0]);
-            console.log(j[0] + "aninha");
+                this.contatos.get(x)!.getFone().delete(j[0]);
+                console.log(j[0] + "aninha");
             }
             cont+=1;
         }
