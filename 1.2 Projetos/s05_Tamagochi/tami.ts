@@ -1,4 +1,4 @@
-const readline = require('readline-sync');
+import readline from 'readline-sync';
 let input = (): string => readline.question();
 let write = (x : any) => process.stdout.write("" + x);
 
