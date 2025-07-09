@@ -6,7 +6,7 @@
 
 Este repositório é um estudo de Programação Orientada a Objeto (P.O.O), além de ter o propósito de introduzir o Typescript aos meus projetos, logo aqui teremos o exercicío de  (1.1), Projetos mais elaborados (1.2) e Projetos no processing (1.3).
 
-<img src="1.4 Readme/imagem.png" alt="Exemplo imagem">
+<img src="./1.4 Readme/imagem.png" alt="Exemplo imagem">
 
 > Imagem acima é um exemplo da utilização dos projetos criados dentro do repositório
 
